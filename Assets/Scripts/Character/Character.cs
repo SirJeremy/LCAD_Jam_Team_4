@@ -7,6 +7,10 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private CharacterController characterController;
     [SerializeField]
+    private Transform grabPosition;
+    [SerializeField]
+    private Transform dropPosition;
+    [SerializeField]
     private int health = 1;
     [SerializeField]
     private float speed = 1;
@@ -23,6 +27,8 @@ public class Character : MonoBehaviour {
 
     private float horizontalLook = 0;
     private float verticalLook = 0;
+    private bool isGrabbing = false;
+    private IGrabbable grabbedObject;
     #endregion
 
     #region Properties
@@ -57,7 +63,11 @@ public class Character : MonoBehaviour {
     private void Update() {
         Rotate();
         Move();
-        if (Input.GetKeyDown(KeyCode.E))
+        if(isGrabbing) {
+            if (Input.GetKeyDown(KeyCode.E))
+                Drop();
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
             Use();
     }
     #endregion
@@ -77,10 +87,29 @@ public class Character : MonoBehaviour {
     }
     private void Use() {
         RaycastHit hit;
+        IUseable useable;
+        IGrabbable grabbable;
         if(Physics.SphereCast(cam.transform.position, useSphereCastRadius, cam.transform.forward, out hit, useRange)) {
-            //hit check
+            useable = hit.collider.gameObject.GetComponent<IUseable>();
+            grabbable = hit.collider.gameObject.GetComponent<IGrabbable>();
+            if (useable != null)
+                useable.Use();
+            if(grabbable != null) {
+                grabbable.Grab(grabPosition);
+                Grab(grabbable);
+            }
         }
         Debug.DrawRay(cam.transform.position, cam.transform.forward * useRange, Color.red, .5f);
+    }
+    private void Grab(IGrabbable grabbedObject) {
+        isGrabbing = true;
+        this.grabbedObject = grabbedObject;
+    }
+    private void Drop() {
+        if (grabbedObject == null)
+            return;
+        grabbedObject.Drop(dropPosition);
+        isGrabbing = false;
     }
     #endregion
 }
