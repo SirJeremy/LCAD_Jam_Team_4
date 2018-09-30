@@ -13,6 +13,7 @@ public class GrabbableObject : MonoBehaviour, IGrabbable {
         transform.parent = grabParent;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
         rb.isKinematic = true;
         boxCollider.enabled = false;
     }
@@ -20,6 +21,7 @@ public class GrabbableObject : MonoBehaviour, IGrabbable {
         transform.parent = null;
         transform.localPosition = dropPosition.position;
         transform.localRotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
         rb.isKinematic = false;
         boxCollider.enabled = true;
         rb.velocity = Vector3.zero;
