@@ -15,6 +15,8 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private float speed = 1;
     [SerializeField]
+    private float ladderMoveSpeed = 2;
+    [SerializeField]
     private float gravityMultiplyer = 1;
     [SerializeField]
     private float horizontalSensitivity = 1;
@@ -28,7 +30,11 @@ public class Character : MonoBehaviour {
     private float horizontalLook = 0;
     private float verticalLook = 0;
     private bool isGrabbing = false;
+    private bool isClimbingLadder = false;
     private IGrabbable grabbedObject;
+    private LadderData ladderData;
+
+    private float ySpeed = 0;
     #endregion
 
     #region Properties
@@ -62,13 +68,22 @@ public class Character : MonoBehaviour {
     }
     private void Update() {
         Rotate();
-        Move();
-        if(isGrabbing) {
-            if (Input.GetKeyDown(KeyCode.E))
-                Drop();
+        if(isClimbingLadder) {
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)) {
+                UnmountLadder();
+            }
+            else
+                MoveLadder();
         }
-        else if (Input.GetKeyDown(KeyCode.E))
-            Use();
+        else {
+            Move();
+            if (isGrabbing) {
+                if (Input.GetKeyDown(KeyCode.E))
+                    Drop();
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+                Use();
+        }
     }
     #endregion
 
@@ -81,22 +96,38 @@ public class Character : MonoBehaviour {
     }
     private void Move() {
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        moveDir = moveDir.normalized * speed * Time.deltaTime;
+        moveDir = moveDir.normalized * speed;
+        if(characterController.isGrounded) {
+            ySpeed = 0;
+        }
+        else {
+            moveDir += Physics.gravity * gravityMultiplyer * Time.deltaTime;
+            moveDir += Vector3.up * ySpeed;
+        }
+        ySpeed = moveDir.y;
+        moveDir *= Time.deltaTime;
         moveDir = transform.localRotation * moveDir;
         characterController.Move(moveDir);
+        
     }
     private void Use() {
         RaycastHit hit;
         IUseable useable;
         IGrabbable grabbable;
+        Ladder ladder;
         if(Physics.SphereCast(cam.transform.position, useSphereCastRadius, cam.transform.forward, out hit, useRange)) {
             useable = hit.collider.gameObject.GetComponent<IUseable>();
             grabbable = hit.collider.gameObject.GetComponent<IGrabbable>();
+            ladder = hit.collider.gameObject.GetComponent<Ladder>();
             if (useable != null)
                 useable.Use();
             if(grabbable != null) {
                 grabbable.Grab(grabPosition);
                 Grab(grabbable);
+            }
+            if(ladder != null) {
+                ladderData = ladder.LadderData;
+                MountLadder();
             }
         }
         Debug.DrawRay(cam.transform.position, cam.transform.forward * useRange, Color.red, .5f);
@@ -110,6 +141,28 @@ public class Character : MonoBehaviour {
             return;
         grabbedObject.Drop(dropPosition);
         isGrabbing = false;
+    }
+    private void MountLadder() {
+        isClimbingLadder = true;
+        transform.position = ladderData.BottomLimit;
+    }
+    private void UnmountLadder() {
+        isClimbingLadder = false;
+        ladderData = null;
+    }
+    private void MoveLadder() {
+        Vector3 moveDir = Vector3.up * Input.GetAxisRaw("Vertical") * ladderMoveSpeed * Time.deltaTime;
+        float newY = moveDir.y + transform.position.y;
+        if (newY > ladderData.TopLimit.y) {
+            transform.position = ladderData.ExitTopPosition;
+            UnmountLadder();
+        }
+        else if (newY < ladderData.BottomLimit.y) {
+            transform.position = ladderData.ExitBottomPosition;
+            UnmountLadder();
+        }
+        else
+            characterController.Move(moveDir);
     }
     #endregion
 }

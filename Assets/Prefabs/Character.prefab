@@ -324,8 +324,9 @@ MonoBehaviour:
   grabPosition: {fileID: 4290780287557838}
   dropPosition: {fileID: 4228572230531656}
   health: 1
-  speed: 8
-  gravityMultiplyer: 1
+  speed: 6
+  ladderMoveSpeed: 3
+  gravityMultiplyer: 2
   horizontalSensitivity: 3
   verticalSensitivity: 3
   useSphereCastRadius: 0.1
