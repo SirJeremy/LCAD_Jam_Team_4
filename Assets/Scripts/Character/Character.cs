@@ -77,8 +77,15 @@ public class Character : MonoBehaviour {
     }
     private void Use() {
         RaycastHit hit;
+        IInteractable interactable;
+        IUseable useable;
         if(Physics.SphereCast(cam.transform.position, useSphereCastRadius, cam.transform.forward, out hit, useRange)) {
-            //hit check
+            interactable = hit.collider.gameObject.GetComponent<IInteractable>();
+            useable = hit.collider.gameObject.GetComponent<IUseable>();
+            if (interactable != null)
+                interactable.Interact();
+            if (useable != null)
+                useable.Use();
         }
         Debug.DrawRay(cam.transform.position, cam.transform.forward * useRange, Color.red, .5f);
     }
