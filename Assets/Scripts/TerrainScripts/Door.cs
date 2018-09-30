@@ -9,15 +9,14 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] int stepLimit = 0;
     public void Interact()
     {
-        // Open
         StartCoroutine(SwingOpen());
     }
 
 
-    void Start()
+    /*void Start()
     {
         StartCoroutine(SwingOpen());
-    }
+    }*/
 
     IEnumerator SwingOpen()
     {
