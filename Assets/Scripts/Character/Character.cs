@@ -91,6 +91,12 @@ public class Character : MonoBehaviour {
                 Use();
         }
     }
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
+        Conveyor conveyor = hit.collider.gameObject.GetComponent<Conveyor>();
+        if(conveyor != null) {
+            characterController.Move(conveyor.Velocity * Time.deltaTime);
+        }
+    }
     #endregion
 
     #region Methods
@@ -108,8 +114,11 @@ public class Character : MonoBehaviour {
                 ySpeed = jumpSpeed;
                 airVelocity = moveDir;
             }
-            else
+            else {
+                airVelocity = Vector3.zero;
                 ySpeed = -1;
+            }
+                
             moveDir += Vector3.up * ySpeed;
         }
         else {
