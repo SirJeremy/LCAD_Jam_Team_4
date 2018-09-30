@@ -7,6 +7,8 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private CharacterController characterController;
     [SerializeField]
+    private int health = 1;
+    [SerializeField]
     private float speed = 1;
     [SerializeField]
     private float gravityMultiplyer = 1;
@@ -14,12 +16,25 @@ public class Character : MonoBehaviour {
     private float horizontalSensitivity = 1;
     [SerializeField]
     private float verticalSensitivity = 1;
+    [SerializeField]
+    private float useSphereCastRadius = .1f;
+    [SerializeField]
+    private float useRange = 3;
 
     private float horizontalLook = 0;
     private float verticalLook = 0;
     #endregion
 
     #region Properties
+    public int Health {
+        get { return health; }
+        set {
+            if (value < 0)
+                health = 0;
+            else
+                health = value;
+        }
+    }
     private float HorizontalLook {
         get { return horizontalLook; }
         set {
@@ -42,6 +57,8 @@ public class Character : MonoBehaviour {
     private void Update() {
         Rotate();
         Move();
+        if (Input.GetKeyDown(KeyCode.E))
+            Use();
     }
     #endregion
 
@@ -57,6 +74,13 @@ public class Character : MonoBehaviour {
         moveDir = moveDir.normalized * speed * Time.deltaTime;
         moveDir = transform.localRotation * moveDir;
         characterController.Move(moveDir);
+    }
+    private void Use() {
+        RaycastHit hit;
+        if(Physics.SphereCast(cam.transform.position, useSphereCastRadius, cam.transform.forward, out hit, useRange)) {
+            //hit check
+        }
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * useRange, Color.red, .5f);
     }
     #endregion
 }
