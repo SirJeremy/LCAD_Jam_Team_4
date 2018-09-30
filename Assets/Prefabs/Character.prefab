@@ -326,6 +326,8 @@ MonoBehaviour:
   health: 1
   speed: 6
   ladderMoveSpeed: 3
+  jumpSpeed: 8
+  airControl: 3
   gravityMultiplyer: 2
   horizontalSensitivity: 3
   verticalSensitivity: 3

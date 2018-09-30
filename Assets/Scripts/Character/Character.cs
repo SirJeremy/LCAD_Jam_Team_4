@@ -17,6 +17,10 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private float ladderMoveSpeed = 2;
     [SerializeField]
+    private float jumpSpeed = 5;
+    [SerializeField]
+    private float airControl = 1;
+    [SerializeField]
     private float gravityMultiplyer = 1;
     [SerializeField]
     private float horizontalSensitivity = 1;
@@ -27,6 +31,8 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private float useRange = 3;
 
+
+    private Vector3 airVelocity = Vector3.zero;
     private float horizontalLook = 0;
     private float verticalLook = 0;
     private bool isGrabbing = false;
@@ -85,6 +91,12 @@ public class Character : MonoBehaviour {
                 Use();
         }
     }
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
+        Conveyor conveyor = hit.collider.gameObject.GetComponent<Conveyor>();
+        if(conveyor != null) {
+            characterController.Move(conveyor.Velocity * Time.deltaTime);
+        }
+    }
     #endregion
 
     #region Methods
@@ -98,9 +110,20 @@ public class Character : MonoBehaviour {
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         moveDir = moveDir.normalized * speed;
         if(characterController.isGrounded) {
-            ySpeed = 0;
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                ySpeed = jumpSpeed;
+                airVelocity = moveDir;
+            }
+            else {
+                airVelocity = Vector3.zero;
+                ySpeed = -1;
+            }
+                
+            moveDir += Vector3.up * ySpeed;
         }
         else {
+            airVelocity = Vector3.Lerp(airVelocity, moveDir, airControl * Time.deltaTime);
+            moveDir = airVelocity;
             moveDir += Physics.gravity * gravityMultiplyer * Time.deltaTime;
             moveDir += Vector3.up * ySpeed;
         }
