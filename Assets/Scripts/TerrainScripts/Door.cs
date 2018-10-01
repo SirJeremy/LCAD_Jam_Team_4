@@ -7,23 +7,13 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] int swingDirection = 1;
     [SerializeField] float swingSpeed = 1;
     [SerializeField] int stepLimit = 0;
-    public bool[] conditions;
-    private bool canOpen = false;
-    public void Interact()
+
+    private bool isOpen = false;
+    public void Interact(bool interactState)
     {
-        canOpen = true;
-        for (int i = 0; i < conditions.Length; i++)
-        {
-            if (!conditions[i])
-            {
-                canOpen = false;
-                break;
-            }
-        }
-        if (canOpen)
-        {
+        if(!isOpen)
             StartCoroutine(SwingOpen());
-        }
+        isOpen = true;
     }
 
 

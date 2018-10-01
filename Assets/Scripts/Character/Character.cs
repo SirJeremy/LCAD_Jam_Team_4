@@ -167,7 +167,10 @@ public class Character : MonoBehaviour {
     }
     private void MountLadder() {
         isClimbingLadder = true;
-        transform.position = ladderData.BottomLimit;
+        float newY = transform.position.y;
+        newY = Mathf.Clamp(newY, ladderData.BottomLimit.y, ladderData.TopLimit.y);
+        transform.position = new Vector3(ladderData.BottomLimit.x, newY, ladderData.BottomLimit.z);
+        ySpeed = 0;
     }
     private void UnmountLadder() {
         isClimbingLadder = false;
