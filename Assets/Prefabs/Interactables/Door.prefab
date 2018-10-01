@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4573601395955312}
   - component: {fileID: 65913496851476238}
   - component: {fileID: 54827961388650678}
+  - component: {fileID: 114777712945826902}
+  - component: {fileID: 33595920599076518}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -68,7 +70,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4767500340910688}
-  - component: {fileID: 114882573279898020}
   m_Layer: 0
   m_Name: Swivel
   m_TagString: Untagged
@@ -82,14 +83,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1251386067887480}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8456569, y: 1.6, z: 9.976922}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -1.5134091, y: -0.5113683, z: -3.6546628}
+  m_LocalScale: {x: 0.18472345, y: 0.18472338, z: 0.18472345}
   m_Children:
   - {fileID: 4767500340910688}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4573601395955312
 Transform:
   m_ObjectHideFlags: 1
@@ -98,7 +99,7 @@ Transform:
   m_GameObject: {fileID: 1106736347612374}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.7}
   m_Children:
   - {fileID: 4896676123123516}
   m_Father: {fileID: 4767500340910688}
@@ -173,6 +174,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1205294656630528}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &33595920599076518
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106736347612374}
+  m_Mesh: {fileID: 4300000, guid: eaac80b20fd59ad48bc1755991832ad3, type: 3}
 --- !u!54 &54827961388650678
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -200,17 +208,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114882573279898020
+--- !u!114 &114777712945826902
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1648193046517584}
+  m_GameObject: {fileID: 1106736347612374}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e919e49093a9de48a2a34d38513d96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingDirection: -1
-  swingSpeed: 100
-  stepLimit: 48
+  swingDirection: 1
+  swingSpeed: 1
+  stepLimit: 47
+  conditions: 000000
