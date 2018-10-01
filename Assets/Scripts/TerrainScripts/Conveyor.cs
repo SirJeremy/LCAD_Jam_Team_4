@@ -8,7 +8,7 @@ public class Conveyor : MonoBehaviour {
     [SerializeField]
     private Vector3 direction = Vector3.forward;
     [SerializeField]
-    private float speedMultiplyer = 1;
+    private float speedMultiplyer = 1.5f;
     private Vector3 velocity = Vector3.forward;
 
     public float Speed {
@@ -39,11 +39,11 @@ public class Conveyor : MonoBehaviour {
 
     private void OnCollisionStay(Collision other) {
         if(other.rigidbody != null) {
-            other.rigidbody.MovePosition(other.transform.position + (velocity * speedMultiplyer * Time.deltaTime));
+            other.rigidbody.MovePosition(other.transform.position + (transform.right * speedMultiplyer * Time.deltaTime));
         }
             
     }
     private void CalculateForce() {
-        velocity = direction.normalized * speed;
+        velocity = transform.forward * speed;
     }
 }

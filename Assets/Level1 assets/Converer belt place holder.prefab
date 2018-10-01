@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 33632465285412030}
   - component: {fileID: 23358603922542126}
   - component: {fileID: 65193813431363302}
-  m_Layer: 0
+  - component: {fileID: 114710865095758000}
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +38,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4465526684226334}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Converer belt place holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +56,7 @@ GameObject:
   - component: {fileID: 33313795233687526}
   - component: {fileID: 23456752002138858}
   - component: {fileID: 136121312591411452}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +74,7 @@ GameObject:
   - component: {fileID: 33516090207129728}
   - component: {fileID: 23195242344778394}
   - component: {fileID: 136828054499836134}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,8 +126,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1555998411930128}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.016, y: 0.134, z: 0.959}
+  m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
+  m_LocalPosition: {x: -13.264282, y: 11.632392, z: -14.367487}
   m_LocalScale: {x: 0.33209, y: 0.057, z: 2.6521}
   m_Children:
   - {fileID: 4197474525281958}
@@ -134,7 +135,7 @@ Transform:
   - {fileID: 4215100448796686}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
 --- !u!23 &23195242344778394
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -273,6 +274,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114710865095758000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1456045226883592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8bc6fba8b926c47b9a7154b0fe01e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  direction: {x: 0, y: 0, z: 1}
+  speedMultiplyer: 1.5
 --- !u!136 &136121312591411452
 CapsuleCollider:
   m_ObjectHideFlags: 1
