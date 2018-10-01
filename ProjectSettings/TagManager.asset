@@ -13,12 +13,12 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Character
+  - Terrain
+  - Interactable
+  - Useable
+  - Grabbable
+  - Ladder
   - 
   - 
   - 
