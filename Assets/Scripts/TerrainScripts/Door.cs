@@ -28,6 +28,7 @@ public class Door : MonoBehaviour, IInteractable
         {
             if (!isOpen)
                 StartCoroutine(SwingOpen());
+                
             isOpen = true;
         }
         
