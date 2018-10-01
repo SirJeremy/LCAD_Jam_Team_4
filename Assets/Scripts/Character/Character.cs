@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Character : MonoBehaviour {
+public class Character : MonoBehaviour, IDamageable {
     #region Variables
     [SerializeField]
     private Transform cam;
@@ -41,14 +41,19 @@ public class Character : MonoBehaviour {
     private LadderData ladderData;
 
     private float ySpeed = 0;
+
+    public delegate void Empty();
+    public static event Empty OnDeath;
     #endregion
 
     #region Properties
     public int Health {
         get { return health; }
         set {
-            if (value < 0)
+            if (value < 0) {
                 health = 0;
+                Die();
+            }                
             else
                 health = value;
         }
@@ -62,7 +67,7 @@ public class Character : MonoBehaviour {
     private float VerticalLook {
         get { return verticalLook; }
         set {
-            verticalLook = Mathf.Clamp(value, -180, 180);
+            verticalLook = Mathf.Clamp(value, -90, 90);
         }
     }
     #endregion
@@ -93,13 +98,26 @@ public class Character : MonoBehaviour {
     }
     private void OnControllerColliderHit(ControllerColliderHit hit) {
         Conveyor conveyor = hit.collider.gameObject.GetComponent<Conveyor>();
+        DamageMesh damageMesh = hit.collider.gameObject.GetComponent<DamageMesh>();
         if(conveyor != null) {
             characterController.Move(conveyor.Velocity * Time.deltaTime);
+        }
+        if(damageMesh != null) {
+            Damage(1);
         }
     }
     #endregion
 
     #region Methods
+    public void Damage(int amount) {
+        Health -= amount;
+    }
+    private void Die() {
+        this.enabled = false;
+        if(OnDeath != null) {
+            OnDeath();
+        }
+    }
     private void Rotate() {
         HorizontalLook += Input.GetAxisRaw("Mouse X") * horizontalSensitivity;
         VerticalLook += Input.GetAxisRaw("Mouse Y") * -verticalSensitivity;

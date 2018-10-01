@@ -39,11 +39,11 @@ public class Conveyor : MonoBehaviour {
 
     private void OnCollisionStay(Collision other) {
         if(other.rigidbody != null) {
-            other.rigidbody.MovePosition(other.transform.position + (transform.right * speedMultiplyer * Time.deltaTime));
+            other.rigidbody.MovePosition(other.transform.position + (velocity  * speedMultiplyer * Time.deltaTime));
         }
             
     }
     private void CalculateForce() {
-        velocity = transform.forward * speed;
+        velocity = transform.right * speed;
     }
 }
