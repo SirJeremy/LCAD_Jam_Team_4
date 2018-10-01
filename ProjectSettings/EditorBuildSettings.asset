@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/_Scenes/Level_Select.unity
+    guid: 0a1b46952948fd2449927da9dd57f74d
+  - enabled: 1
+    path: Assets/_Scenes/Level 1.unity
+    guid: 486f87ddb6430e2438d178623bdfe0ee
+  - enabled: 1
+    path: Assets/_Scenes/gamejam Greyblock.unity
+    guid: 720b60f1c12931143bc8b2d9b2f11600
+  - enabled: 1
+    path: Assets/_Scenes/CharacterTest.unity
+    guid: f0323a527182f6747bfd3407747f83ad
   m_configObjects: {}
